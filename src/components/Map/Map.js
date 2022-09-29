@@ -2,7 +2,6 @@ import { TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapMarker, { LocationMarker } from "./Marker.js";
 import { MapContent } from "./Map.jsx";
-import { PostHeader } from "../shared/postBody.jsx";
 
 const where = {
   x: -29.694,
@@ -28,14 +27,13 @@ export default function MapOverlay() {
 
   return (
     <MapContent
-      // zoomControl={false}
+      zoomControl={false}
       center={[where.x, where.y]}
       zoom={where.zoom}
       dragging={false}
       scrollWheelZoom={false}
       doubleClickZoom={false}
     >
-      <PostHeader />
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       {/* <Markers /> */}
       <MapMarker x={where.x} y={where.y} />
