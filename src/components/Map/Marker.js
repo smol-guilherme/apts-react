@@ -26,7 +26,6 @@ export function LocationMarker() {
 export default function MapMarker({ x, y }) {
   const mMap = useMap();
   const { overlay, setOverlay } = useContext(DataContext);
-  const [visibility, setVisibility] = useState(1);
   const newBounds = mMap.getBounds();
 
   delete L.Icon.Default.prototype._getIconUrl;
@@ -36,42 +35,14 @@ export default function MapMarker({ x, y }) {
     shadowUrl: markerShadow,
   });
 
-  function handleClick(e) {
-    console.log("enter");
+  function handleClick() {
     if (overlay === null) {
-      setVisibility(0);
       return setOverlay(
         Object.values(newBounds).map((border) => Object.values(border))
       );
     }
-    setVisibility(1);
     setOverlay(null);
   }
 
-  const ReviewOverlay = () => {
-    if (overlay !== null) {
-      return (
-        <SVGOverlay zIndex={1000} bounds={overlay}>
-          <rect x="0" y="0" width={"100%"} height={"100%"} />
-          <circle
-            r={"15"}
-            cx={"25"}
-            cy={"25"}
-            fill={"blue"}
-            onClick={(e) => console.log(e)}
-          />
-        </SVGOverlay>
-      );
-    }
-    return <></>;
-  };
-  return (
-    <Marker
-      opacity={visibility}
-      position={[x, y]}
-      eventHandlers={{ click: handleClick }}
-    >
-      <ReviewOverlay />
-    </Marker>
-  );
+  return <Marker position={[x, y]} eventHandlers={{ click: handleClick }} />;
 }
