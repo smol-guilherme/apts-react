@@ -1,6 +1,6 @@
-import { TileLayer, useMap } from "react-leaflet";
+import { TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import MapMarker, { LocationMarker } from "./Marker.js";
+import MapMarker from "./Marker.js";
 import { MapContent } from "./Map.jsx";
 
 const where = {
@@ -17,14 +17,6 @@ const markers = [
 ];
 
 export default function MapOverlay() {
-  const Markers = () => {
-    return markers.map((mark, index) => (
-      <>
-        <MapMarker key={index} x={mark[0]} y={mark[1]} />
-      </>
-    ));
-  };
-
   return (
     <MapContent
       zoomControl={false}
@@ -35,9 +27,7 @@ export default function MapOverlay() {
       doubleClickZoom={false}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {/* <Markers /> */}
       <MapMarker x={where.x} y={where.y} />
-      <LocationMarker />
     </MapContent>
   );
 }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const MapContent = styled(MapContainer)`
   display: flex;
-  position: relative;
+  position: absolute;
   height: 40vh;
   width: 85vw;
   border-radius: 8px;

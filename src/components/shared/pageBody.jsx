@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Content = styled.div`
   display: flex;
+  position: relative;
   width: 100vw;
   height: 80vh;
   padding-top: 5vh;
