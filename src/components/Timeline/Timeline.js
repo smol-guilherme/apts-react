@@ -10,7 +10,8 @@ const lorem =
 export default function Timeline() {
   const { overlay, setOverlay } = useContext(DataContext);
 
-  function handleClick() {
+  function handleClick(e) {
+    e.stopPropagation();
     setOverlay(null);
   }
 
@@ -23,7 +24,7 @@ export default function Timeline() {
         handleClick={handleClick}
         text={lorem}
         username={"Ademir"}
-        info={"a lot of pretty buttons and numbers"}
+        info={"info"}
       />
     );
   };
