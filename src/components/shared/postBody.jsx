@@ -1,15 +1,31 @@
 import styled from "styled-components";
 import { FaPlusCircle, FaCheckCircle, FaStar, FaRegStar } from 'react-icons/fa';
 
+export function FooterElement(props) {
+  const StarDisplay = () => {
+    if(props.starred) return <FaRegStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
+    return <FaStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
+  }
+
+  return(
+    <Footer >
+      <span>
+        <StarDisplay />
+        {props.info} 
+      </span>
+      <p>
+        {props.location || 'Ostrich Cafe'}
+      </p>
+    </Footer>
+  )
+}
+
 export function Post(props) {
   const IconDisplay = () => { 
     if(props.follows) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
   return <FaCheckCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
 }
-  const StarDisplay = () => {
-    if(props.starred) return <FaRegStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
-    return <FaStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
-  }
+
 
   return(
   <Box onClick={props.handleClick}>
@@ -23,21 +39,12 @@ export function Post(props) {
       </p>
     </Header>
     <Text >{props.text}</Text>
-    <Footer >
-      <span>
-        <StarDisplay />
-        {props.info} 
-      </span>
-      <p>
-        {props.location || 'Ostrich Cafe'}
-      </p>
-    </Footer>
+    <FooterElement {...props} />
   </Box>);
 }
 
-const Box = styled.div`
+export const Box = styled.div`
   display: flex;
-  position: absolute;
   flex-direction: column;
   height: 40vh;
   width: 85vw;
@@ -46,6 +53,7 @@ const Box = styled.div`
   color: #454545;
   line-height: 30px;
   font-size: 24px;
+  margin-bottom: 2.25vh;
   box-shadow: 2px 2px 3px 1px #66666670;
 
   div {
@@ -58,13 +66,13 @@ const Header = styled.div`
   display: flex;
   width: 100%;
   height: 5.5vh;
-  position: relative;
   justify-content: space-between;
   align-items: center;
   top: 0;
   left: 0;
   background-color: #a9ceee;
   border-radius: 8px 8px 0 0;
+  z-index: 1;
 
   div {
     display: flex;

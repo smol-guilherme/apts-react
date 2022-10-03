@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 export const Content = styled.div`
   display: flex;
-  position: relative;
+  flex-direction: column;
   width: 100vw;
   height: 80vh;
   padding-top: 10vh;
   flex-grow: 1;
-  /* background-color: #333333; */
-  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   color: white;
+  overflow-y: scroll;
+  
 `
 
 export const Header = styled.div`
@@ -23,7 +24,7 @@ export const Header = styled.div`
   background-color: #70b1e9;
   font-size: 30px;
   box-shadow: 0px 2px 3px 2px #66666650;
-  z-index: 1000;
+  z-index: 800;
   justify-content: space-between;
   
   div {
@@ -43,4 +44,5 @@ export const NewEntry = styled.div`
   right: 2.25vh;
   font-size: 56px;
   color: #70b1e9;
+  background-color: transparent;
 `

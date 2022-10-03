@@ -24,11 +24,10 @@ export function LocationMarker() {
   );
 }
 
-export default function MapMarker({ x, y }) {
+export default function MapMarker({ position }) {
   const mMap = useMap();
   const { overlay, setOverlay } = useContext(DataContext);
   const newBounds = mMap.getBounds();
-
   delete L.Icon.Default.prototype._getIconUrl;
 
   const svgIcon = L.divIcon({
@@ -63,5 +62,7 @@ export default function MapMarker({ x, y }) {
     setOverlay(null);
   }
 
-  return <Marker position={[x, y]} eventHandlers={{ click: handleClick }} />;
+  return (
+    <Marker position={[...position]} eventHandlers={{ click: handleClick }} />
+  );
 }
