@@ -3,11 +3,11 @@ import { FaPlusCircle, FaCheckCircle, FaStar, FaRegStar } from 'react-icons/fa';
 
 export function Post(props) {
   const IconDisplay = () => { 
-    if(true) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
+    if(props.follows) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
   return <FaCheckCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
 }
   const StarDisplay = () => {
-    if(true) return <FaRegStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
+    if(props.starred) return <FaRegStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
     return <FaStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
   }
 
@@ -24,8 +24,13 @@ export function Post(props) {
     </Header>
     <Text >{props.text}</Text>
     <Footer >
-      <StarDisplay />
-      {props.info} 
+      <span>
+        <StarDisplay />
+        {props.info} 
+      </span>
+      <p>
+        {props.location || 'Ostrich Cafe'}
+      </p>
     </Footer>
   </Box>);
 }
@@ -37,10 +42,11 @@ const Box = styled.div`
   height: 40vh;
   width: 85vw;
   border-radius: 8px;
-  background-color: black;
-  color: white;
+  background-color: #EDEDED;
+  color: #454545;
   line-height: 30px;
   font-size: 24px;
+  box-shadow: 2px 2px 3px 1px #66666670;
 
   div {
     padding: 3px 6px;
@@ -57,7 +63,7 @@ const Header = styled.div`
   align-items: center;
   top: 0;
   left: 0;
-  background-color: red;
+  background-color: #a9ceee;
   border-radius: 8px 8px 0 0;
 
   div {
@@ -70,16 +76,20 @@ const Header = styled.div`
   }
 
   p {
-    color: lightgray;
+    color: #FAFAFA;
     font-size: 20px;
+  }
+
+  span {
+    font-size: 22px;
+    color: #eff555;
   }
 `
 
 const Footer = styled(Header)`
   bottom: 0;
-  justify-content: unset;
   border-radius: 0 0 8px 8px;
-  background-color: blue;
+  background-color: #a9ceee;
 `
 
 const Text = styled.p`

@@ -49,7 +49,8 @@ table {
 	border-spacing: 0;
 }
 body {
-	font-family: 'Lexend Deca';
+	/* font-family: 'Lexend Deca'; */
+	background-color: #FAFAFA;
 }
 `;
 
