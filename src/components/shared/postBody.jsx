@@ -20,12 +20,11 @@ export function FooterElement(props) {
   )
 }
 
-export function Post(props) {
+export function PostElement(props) {
   const IconDisplay = () => { 
     if(props.follows) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
   return <FaCheckCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
 }
-
 
   return(
   <Box onClick={props.handleClick}>

@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { TbComet } from "react-icons/tb";
 import { MdStars } from "react-icons/md";
 import { Content, Header, NewEntry } from "../shared/pageBody.jsx";
-import { Post } from "../shared/postBody.jsx";
-import { MapElement } from "../Map/Map.jsx";
-import DataContext from "../context/DataContext.js";
+import { MapOverlay } from "../Map/Map.js";
 
 const where = {
   x: -29.694,
@@ -35,6 +32,7 @@ const mocked = [
     username: "Jorge",
     info: "880",
     position: markers[1],
+    location: "Starlight Cafe",
   },
   {
     text: lorem,
@@ -51,20 +49,8 @@ const mocked = [
 ];
 
 export default function Timeline() {
-  const { overlay, setOverlay } = useContext(DataContext);
-
-  function handleClick(e) {
-    e.stopPropagation();
-    setOverlay(null);
-  }
-
-  const Render = () => {
-    if (overlay === null) {
-      return mocked.map((data, index) => <MapElement key={index} {...data} />);
-    }
-    return mocked.map((data) => <Post handleClick={handleClick} {...data} />);
-  };
-
+  const Page = () =>
+    mocked.map((data, index) => <MapOverlay key={index} {...data} />);
   const HeaderElement = () => {
     return (
       <Header>
@@ -90,7 +76,7 @@ export default function Timeline() {
   return (
     <Content>
       <HeaderElement />
-      <Render />
+      <Page />
       <BottomElement />
     </Content>
   );

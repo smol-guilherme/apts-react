@@ -24,7 +24,7 @@ export function LocationMarker() {
   );
 }
 
-export default function MapMarker({ position }) {
+export default function MapMarker({ position, handleClick }) {
   const mMap = useMap();
   const { overlay, setOverlay } = useContext(DataContext);
   const newBounds = mMap.getBounds();
@@ -53,7 +53,7 @@ export default function MapMarker({ position }) {
     shadowUrl: markerShadow,
   });
 
-  function handleClick() {
+  function handleClickPrototype() {
     if (overlay === null) {
       return setOverlay(
         Object.values(newBounds).map((border) => Object.values(border))
