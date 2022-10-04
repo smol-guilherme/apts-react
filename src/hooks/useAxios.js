@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const BASE_URL = process.env.REACT_APP_BACKEND_URI;
+const BASE_URL = process.env.REACT_APP_API;
 
 const methods = {
   get: axios.get,
@@ -30,13 +30,12 @@ export function useAxios({
         config?.[0],
         config?.[1]
       );
-      setResponse(response);
+      setResponse(response.data);
     } catch (err) {
       setError(err);
     } finally {
       setLoading(false);
       setError(null);
-      setResponse(null);
     }
   };
 
@@ -44,8 +43,10 @@ export function useAxios({
     if (method !== "") {
       axiosMethod();
     }
+    if (response !== null) setResponse(null);
     // eslint-disable-next-line
   }, [path, method, config, query]);
+  // console.log(response);
 
   return { response, error, loading };
 }

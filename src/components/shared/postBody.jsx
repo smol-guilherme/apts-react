@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FaPlusCircle, FaCheckCircle, FaStar, FaRegStar } from 'react-icons/fa';
+import { formatDate } from "../../utils/dataFormatUtils.js";
 
 export function FooterElement(props) {
   const StarDisplay = () => {
@@ -21,24 +22,25 @@ export function FooterElement(props) {
 }
 
 export function PostElement(props) {
+  // console.log(props);
   const IconDisplay = () => { 
     if(props.follows) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
   return <FaCheckCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
 }
-
+  const date = formatDate(props.date);
   return(
   <Box onClick={props.handleClick}>
     <Header>
       <div>
-        {props.username} 
+        {props.author.username} 
         <IconDisplay />
       </div>
       <p>
-        {props.date || '00/00/00 23:59'}
+        {date}
       </p>
     </Header>
-    <Text >{props.text}</Text>
-    <FooterElement {...props} />
+    <Text >{props.description}</Text>
+    {/* <FooterElement {...props} /> */}
   </Box>);
 }
 
