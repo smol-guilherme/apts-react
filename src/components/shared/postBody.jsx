@@ -4,7 +4,7 @@ import { formatDate } from "../../utils/dataFormatUtils.js";
 
 export function FooterElement(props) {
   const StarDisplay = () => {
-    if(props.likedBy.includes(props.author.authorId)) return <FaStar onClick={(e) => props.handleClickStar(e, props.id) } />
+    if(props.liked) return <FaStar onClick={(e) => props.handleClickStar(e, props.id) } />
     return <FaRegStar onClick={(e) => props.handleClickStar(e, props.id) } />
   }
 
@@ -12,7 +12,7 @@ export function FooterElement(props) {
     <Footer >
       <span>
         <StarDisplay handleClickStar={props.handleClickStar} />
-        {props.stars} 
+        {props.starsCount} 
       </span>
       <p>
         {props.location.locationName}
@@ -39,7 +39,7 @@ export function PostElement(props) {
       </p>
     </Header>
     <Text >{props.description}</Text>
-    <FooterElement {...props} handleClickStar={props.handleClickStar}  />
+    <FooterElement {...props} starsCount={props.starsCount} handleClickStar={props.handleClickStar}  />
   </Box>);
 }
 
