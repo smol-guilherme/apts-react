@@ -1,4 +1,21 @@
+import { TbComet } from "react-icons/tb";
+import { TiThMenu } from "react-icons/ti";
+
 import styled from "styled-components";
+
+export function HeaderElement () {
+  return (
+    <Header>
+      <div>
+        <TiThMenu />
+      </div>
+      <div>
+        A PLACE TO STAR <TbComet />
+      </div>
+      <div></div>
+    </Header>
+  );
+};
 
 export const Content = styled.div`
   display: flex;
@@ -47,4 +64,8 @@ export const NewEntry = styled.div`
   background-color: #FAFAFA;
   border-radius: 50%;
   z-index: 1000;
+  
+  :hover {
+    cursor: pointer;
+  }
 `

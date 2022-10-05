@@ -1,15 +1,15 @@
-import { TiThMenu } from "react-icons/ti";
-import { TbComet } from "react-icons/tb";
-import { MdStars } from "react-icons/md";
-import { Content, Header, NewEntry } from "../shared/pageBody.jsx";
+import { Content, HeaderElement } from "../shared/pageBody.jsx";
 import { MapOverlay } from "../Map/Map.js";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAxios } from "../../hooks/useAxios.js";
+import DataContext from "../context/DataContext.js";
+import { BottomElement } from "../Footer/Footer.js";
 
 export default function Timeline() {
   const [config, setConfig] = useState({});
   const { response, error, loading } = useAxios(config);
   const [timeline, setTimeline] = useState(null);
+  const { locationData, setLocationData } = useContext(DataContext);
 
   useEffect(() => {
     if (!loading && timeline === null) {
@@ -61,28 +61,6 @@ export default function Timeline() {
         <MapOverlay key={index} {...data} />
       ));
     return <></>;
-  };
-
-  const HeaderElement = () => {
-    return (
-      <Header>
-        <div>
-          <TiThMenu />
-        </div>
-        <div>
-          A PLACE TO STAR <TbComet />
-        </div>
-        <div></div>
-      </Header>
-    );
-  };
-
-  const BottomElement = () => {
-    return (
-      <NewEntry>
-        <MdStars />
-      </NewEntry>
-    );
   };
 
   return (

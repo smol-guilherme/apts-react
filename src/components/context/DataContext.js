@@ -5,7 +5,6 @@ const DataContext = createContext();
 export function DataContextProvider({ children }) {
   const [locationData, setLocationData] = useState(null);
   const [logout, setLogout] = useState(false);
-  const [overlay, setOverlay] = useState(null);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -24,8 +23,6 @@ export function DataContextProvider({ children }) {
         setLocationData,
         userData,
         setUserData,
-        overlay,
-        setOverlay,
       }}
     >
       {children}

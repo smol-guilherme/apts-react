@@ -1,6 +1,6 @@
 import { TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import MapMarker, { LocationMarker } from "./Marker.js";
+import MapMarker, { LocationMarker } from "../Marker/Marker.js";
 import { MapContent } from "./Map.jsx";
 import { useEffect, useState } from "react";
 import { Box, PostElement } from "../shared/postBody.jsx";
