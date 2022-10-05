@@ -22,7 +22,6 @@ export function FooterElement(props) {
 }
 
 export function PostElement(props) {
-  // console.log(props);
   const IconDisplay = () => { 
     if(props.follows) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
   return <FaCheckCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
@@ -47,7 +46,8 @@ export function PostElement(props) {
 export const Box = styled.div`
   display: flex;
   flex-direction: column;
-  height: 40vh;
+  min-height: 32vh;
+  max-height: 32vh;
   width: 85vw;
   border-radius: 8px;
   background-color: #EDEDED;
@@ -63,7 +63,7 @@ export const Box = styled.div`
   }
 `
 
-const Header = styled.div`
+export const Header = styled.div`
   display: flex;
   width: 100%;
   height: 5.5vh;
@@ -99,12 +99,19 @@ const Footer = styled(Header)`
   bottom: 0;
   border-radius: 0 0 8px 8px;
   background-color: #a9ceee;
+
+  span {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `
 
 const Text = styled.p`
   display: flex;
   word-spacing: 2px;
   flex-grow: 1;
+  padding: 3px 6px;
   overflow-y: scroll;
   overflow-x: none;
 `

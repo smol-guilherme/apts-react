@@ -9,9 +9,13 @@ import { MapHeader } from "./Map.jsx";
 function MapElement(props) {
   const latitude = props.location.latitude / 10000;
   const longitude = props.location.longitude / 10000;
+  console.log(props);
   return (
     <Box>
-      <MapHeader username={props.location.locationName} date={props.date} />
+      <MapHeader>
+        <div>{props.title}</div>
+        <p>{props.author.username}</p>
+      </MapHeader>
       <MapContent
         zoomControl={false}
         center={[latitude, longitude]}
