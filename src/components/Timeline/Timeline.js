@@ -81,7 +81,6 @@ export default function Timeline() {
     return (
       <NewEntry>
         <MdStars />
-        <div></div>
       </NewEntry>
     );
   };

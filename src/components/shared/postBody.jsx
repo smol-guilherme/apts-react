@@ -4,14 +4,14 @@ import { formatDate } from "../../utils/dataFormatUtils.js";
 
 export function FooterElement(props) {
   const StarDisplay = () => {
-    if(props.likedBy.includes(props.author.authorId)) return <FaStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
-    return <FaRegStar onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
+    if(props.likedBy.includes(props.author.authorId)) return <FaStar onClick={(e) => props.handleClickStar(e, props.id) } />
+    return <FaRegStar onClick={(e) => props.handleClickStar(e, props.id) } />
   }
 
   return(
     <Footer >
       <span>
-        <StarDisplay />
+        <StarDisplay handleClickStar={props.handleClickStar} />
         {props.stars} 
       </span>
       <p>
@@ -39,7 +39,7 @@ export function PostElement(props) {
       </p>
     </Header>
     <Text >{props.description}</Text>
-    <FooterElement {...props} />
+    <FooterElement {...props} handleClickStar={props.handleClickStar}  />
   </Box>);
 }
 
@@ -53,7 +53,7 @@ export const Box = styled.div`
   background-color: #EDEDED;
   color: #454545;
   line-height: 30px;
-  font-size: 24px;
+  font-size: 2.8vh;
   margin-bottom: 2.25vh;
   box-shadow: 2px 2px 3px 1px #66666670;
 
@@ -74,6 +74,7 @@ export const Header = styled.div`
   background-color: #a9ceee;
   border-radius: 8px 8px 0 0;
   z-index: 1;
+  font-size: 2.35vh;
 
   div {
     display: flex;
@@ -86,11 +87,10 @@ export const Header = styled.div`
 
   p {
     color: #FAFAFA;
-    font-size: 20px;
   }
 
   span {
-    font-size: 22px;
+    font-size: 2.75vh;
     color: #eff555;
   }
 `

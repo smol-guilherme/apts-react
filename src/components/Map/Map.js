@@ -5,11 +5,12 @@ import { MapContent } from "./Map.jsx";
 import { useState } from "react";
 import { Box, PostElement } from "../shared/postBody.jsx";
 import { MapHeader } from "./Map.jsx";
+import { useAxios } from "../../hooks/useAxios.js";
 
 function MapElement(props) {
   const latitude = props.location.latitude / 10000;
   const longitude = props.location.longitude / 10000;
-  console.log(props);
+  // console.log(props);
   return (
     <Box>
       <MapHeader>
@@ -37,14 +38,41 @@ function MapElement(props) {
 
 export function MapOverlay(props) {
   const [overlay, setOverlay] = useState(false);
+  const [config, setConfig] = useState({});
+  const { response, error, loading } = useAxios(config);
 
   function handleClick() {
     setOverlay((previous) => !previous);
   }
 
+  function handleClickStar(e, params = "") {
+    e.stopPropagation();
+    console.log(e, params);
+    e.preventDefault();
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOTlmYjNiLTQ4ZDYtNGI1NS1hN2EzLTc4NjZiNmUyMGZmNCIsImlhdCI6MTY2NDk3MjQ3NiwiZXhwIjoxNjY1MDAxMjc2fQ.qzK8gP2HZJ1O44J5KrklLpte3tB52s3iNvIBGLqWneg";
+    const header = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const newConfig = {
+      method: "post",
+      path: `posts/star/${params}`,
+      config: [header],
+    };
+    setConfig(newConfig);
+  }
+
   const Render = () => {
     if (!overlay) return <MapElement handleClick={handleClick} {...props} />;
-    return <PostElement handleClick={handleClick} {...props} />;
+    return (
+      <PostElement
+        handleClickStar={handleClickStar}
+        handleClick={handleClick}
+        {...props}
+      />
+    );
   };
 
   return <Render />;
