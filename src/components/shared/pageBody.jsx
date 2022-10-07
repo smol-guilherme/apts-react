@@ -28,6 +28,7 @@ export const Content = styled.div`
   margin: 0 auto;
   color: white;
   overflow-y: scroll;
+  overflow-x: hidden;
 `
 
 export const Header = styled.div`

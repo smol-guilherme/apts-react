@@ -59,8 +59,7 @@ export function MapOverlay(props) {
 
   function handleClickStar(e, params = "") {
     e.stopPropagation();
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOTlmYjNiLTQ4ZDYtNGI1NS1hN2EzLTc4NjZiNmUyMGZmNCIsImlhdCI6MTY2NDk3MjQ3NiwiZXhwIjoxNjY1MDAxMjc2fQ.qzK8gP2HZJ1O44J5KrklLpte3tB52s3iNvIBGLqWneg";
+    const token = process.env.REACT_APP_TOKEN;
     const header = {
       headers: {
         Authorization: `Bearer ${token}`,

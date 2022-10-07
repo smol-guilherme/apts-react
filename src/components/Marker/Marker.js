@@ -1,16 +1,16 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import DataContext from "../context/DataContext.js";
 import { Marker, Popup, useMap, useMapEvent } from "react-leaflet";
 import { FaMugHot } from "react-icons/fa";
 import L from "leaflet";
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { Icon } from "./Marker.jsx";
 
 export function LocationMarker() {
   const [position, setPosition] = useState(null);
   useMapEvent({
     click(e) {
+      Icon();
+      console.log(e.latlng);
       setPosition(e.latlng);
     },
   });
@@ -28,7 +28,10 @@ export default function MapMarker({ position, handleClick }) {
   const mMap = useMap();
   const { overlay, setOverlay } = useContext(DataContext);
   const newBounds = mMap.getBounds();
-  delete L.Icon.Default.prototype._getIconUrl;
+
+  useEffect(() => {
+    Icon();
+  }, []);
 
   const svgIcon = L.divIcon({
     html: `
@@ -45,12 +48,6 @@ export default function MapMarker({ position, handleClick }) {
     className: "",
     iconSize: [24, 40],
     iconAnchor: [12, 40],
-  });
-
-  L.Icon.Default.mergeOptions({
-    iconUrl: markerIcon,
-    iconRetinaUrl: markerIcon2x,
-    shadowUrl: markerShadow,
   });
 
   function handleClickPrototype() {

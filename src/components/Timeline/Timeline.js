@@ -2,8 +2,8 @@ import { Content, HeaderElement } from "../shared/pageBody.jsx";
 import { MapOverlay } from "../Map/Map.js";
 import { useContext, useEffect, useState } from "react";
 import { useAxios } from "../../hooks/useAxios.js";
-import DataContext from "../context/DataContext.js";
 import { BottomElement } from "../Footer/Footer.js";
+import DataContext from "../context/DataContext.js";
 
 export default function Timeline() {
   const [config, setConfig] = useState({});
@@ -13,8 +13,7 @@ export default function Timeline() {
 
   useEffect(() => {
     if (!loading && timeline === null) {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzOTlmYjNiLTQ4ZDYtNGI1NS1hN2EzLTc4NjZiNmUyMGZmNCIsImlhdCI6MTY2NDk3MjQ3NiwiZXhwIjoxNjY1MDAxMjc2fQ.qzK8gP2HZJ1O44J5KrklLpte3tB52s3iNvIBGLqWneg";
+      const token = process.env.REACT_APP_TOKEN;
       const header = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -28,6 +27,7 @@ export default function Timeline() {
       setConfig(newConfig);
       if (response !== null) {
         setTimeline(response);
+        setLocationData(response);
         setConfig({});
       }
     }
