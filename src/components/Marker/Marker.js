@@ -11,7 +11,7 @@ export function LocationMarker() {
     click(e) {
       Icon();
       console.log(e.latlng);
-      setPosition(e.latlng);
+      // setPosition(e.latlng);
     },
   });
 
@@ -28,7 +28,6 @@ export default function MapMarker({ position, handleClick }) {
   const mMap = useMap();
   const { overlay, setOverlay } = useContext(DataContext);
   const newBounds = mMap.getBounds();
-
   useEffect(() => {
     Icon();
   }, []);
@@ -60,6 +59,9 @@ export default function MapMarker({ position, handleClick }) {
   }
 
   return (
-    <Marker position={[...position]} eventHandlers={{ click: handleClick }} />
+    <Marker
+      position={[...position.map((val) => val / 10000)]}
+      eventHandlers={{ click: handleClick }}
+    />
   );
 }

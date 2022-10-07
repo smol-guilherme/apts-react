@@ -1,62 +1,107 @@
 import { BottomElement } from "../Footer/Footer.js";
 import { Content, HeaderElement } from "../shared/pageBody.jsx";
-import { useEffect, useState } from "react";
-import { Marker, TileLayer, useMap, useMapEvent } from "react-leaflet";
+import React, { useEffect, useMemo, useState } from "react";
+import { Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import { ReviewMap } from "./Review.jsx";
 import MapMarker, { LocationMarker } from "../Marker/Marker.js";
 import { Icon } from "../Marker/Marker.jsx";
 import { useLocation } from "react-router";
 import { useAxios } from "../../hooks/useAxios.js";
 
+function WhereIAmMarker({
+  setPosition,
+  center,
+  setCenter,
+  setZoom,
+  zoom,
+  setInitialized,
+}) {
+  const map = useMap();
+  if (zoom === 1) {
+    map
+      .locate({ enableHighAccuracy: true, watch: false })
+      .on("locationfound", (e) => {
+        console.log("locate");
+        setPosition(e.latlng);
+        setCenter(e.latlng);
+        map.stopLocate();
+        setZoom(14);
+        // map.flyTo(e.latlng, 12, { duration: 0.75 });
+        setInitialized((previous) => !previous);
+      });
+  }
+  return null;
+}
+
 export default function Review() {
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [zoom, setZoom] = useState(1);
-  const { pathname } = useLocation();
   const [config, setConfig] = useState({});
   const { response, error, loading } = useAxios(config);
   const [places, setPlaces] = useState([]);
   const [initialized, setInitialized] = useState(false);
-  const [center, setCenter] = useState(null);
+  const [center, setCenter] = useState(position);
+  const memoPlaces = useMemo(() => {
+    if (response !== null) {
+      console.log(response);
+      setPlaces(response);
+      return response;
+    }
+    return places;
+  }, [response]);
+
+  function RenderNearbyLocations() {
+    const map = useMapEvents({
+      dragend() {
+        const newCenter = map.getCenter();
+        requestNewLocations(newCenter);
+        setPosition(newCenter);
+        setCenter(newCenter);
+      },
+      zoom() {
+        setZoom(map.getZoom());
+      },
+    });
+
+    function handleClick() {
+      // e.stopPropagation();
+      console.log("I clicked the map");
+    }
+    return memoPlaces.map((place, id) => (
+      <MapMarker
+        key={id}
+        position={[place.latitude, place.longitude]}
+        handleClick={handleClick}
+      />
+    ));
+  }
+
+  function requestNewLocations(center) {
+    if (!loading && initialized) {
+      const token = process.env.REACT_APP_TOKEN;
+      const header = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      // console.log("request in", position);
+      const newConfig = {
+        method: "get",
+        path: "places",
+        config: [header],
+        query: `?lat=${center.lat.toFixed(4) * 10000}&lng=${
+          center.lng.toFixed(4) * 10000
+        }`,
+      };
+      setConfig(newConfig);
+    }
+  }
 
   useEffect(() => {
     Icon();
   }, [position]);
   // aprender useMemo para manter a renderização do mapa
   // estática enquanto ocorrem requisições para o backend
-  const RenderNearbyLocations = () => {
-    useMapEvent("dragend", () => {
-      if (!loading && initialized) {
-        const token = process.env.REACT_APP_TOKEN;
-        const header = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        console.log("request in", position);
-        const newConfig = {
-          method: "get",
-          path: "places",
-          config: [header],
-          query: `?lat=${position.lat.toFixed(4) * 10000}&lng=${
-            position.lng.toFixed(4) * 10000
-          }`,
-        };
-        setConfig(newConfig);
-        if (response !== null) {
-          setPlaces(response);
-        }
-      }
-    });
-
-    console.log(places);
-    function handleClick(e) {
-      e.stopPropagation();
-      console.log("I clicked the map");
-    }
-    return places.map((place, id) => (
-      <MapMarker key={id} position={[place.latitude, place.longitude]} />
-    ));
-  };
 
   const RenderMapElement = () => {
     return (
@@ -67,33 +112,24 @@ export default function Review() {
         doubleClickZoom={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <LocationMarker />
-        {/* <RenderNearbyLocations /> */}
-        <WhereIAmMarker />
+        {/* <LocationMarker /> */}
+        <RenderNearbyLocations
+          setPosition={setPosition}
+          setCenter={setCenter}
+          requestNewLocations={requestNewLocations}
+          memoPlaces={memoPlaces}
+          setZoom={setZoom}
+        />
+        <WhereIAmMarker
+          setPosition={setPosition}
+          setCenter={setCenter}
+          center={center}
+          setInitialized={setInitialized}
+          zoom={zoom}
+          setZoom={setZoom}
+        />
       </ReviewMap>
     );
-  };
-
-  const WhereIAmMarker = () => {
-    const map = useMap();
-    useEffect(() => {
-      console.log(pathname);
-      if (zoom === 1) {
-        map.locate({ enableHighAccuracy: true, watch: false }).on(
-          "locationfound",
-          (e) => {
-            setPosition(e.latlng);
-            map.stopLocate();
-            setZoom(14);
-            // map.flyTo(e.latlng, 12, { duration: 0.75 });
-            setInitialized((previous) => !previous);
-          },
-          [pathname]
-        );
-      }
-    });
-    if (zoom !== 1) return <Marker position={position} zoom={zoom} />;
-    return <></>;
   };
 
   return (
