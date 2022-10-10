@@ -24,8 +24,6 @@ function WhereIAmMarker({
         setPosition(e.latlng);
         setCenter(e.latlng);
         map.stopLocate();
-        setZoom(14);
-        // map.flyTo(e.latlng, 12, { duration: 0.75 });
         setInitialized((previous) => !previous);
       });
   }

@@ -57,6 +57,7 @@ export default function Timeline(props) {
       }
     }
   }, [response]);
+
   const Page = () => {
     if (timeline === null) {
       return <></>;
@@ -64,11 +65,15 @@ export default function Timeline(props) {
     return timeline.map((data, index) => <Post key={index} {...data} />);
   };
 
-  return (
-    <Content>
-      <HeaderElement />
-      <Page />
-      <BottomElement />
-    </Content>
-  );
+  const Render = () => {
+    return (
+      <Content>
+        <HeaderElement />
+        <Page />
+        <BottomElement />
+      </Content>
+    );
+  };
+
+  return <Render />;
 }

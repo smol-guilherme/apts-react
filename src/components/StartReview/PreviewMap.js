@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { TileLayer, useMap } from "react-leaflet";
 import { BottomElement } from "../Footer/Footer.js";
+import { LocationMarker } from "../Marker/Marker.js";
 import { Content, HeaderElement } from "../shared/pageBody.jsx";
 import { ReviewMap } from "./PreviewMap.jsx";
 import UserMarker from "./UserMarker.js";
@@ -20,6 +21,7 @@ export default function PreviewMap() {
         doubleClickZoom={false}
       >
         <UserMarker />
+        <LocationMarker />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       </ReviewMap>
     );

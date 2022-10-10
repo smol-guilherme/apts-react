@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import DataContext from "../context/DataContext.js";
-import { Marker, Popup, useMap, useMapEvent } from "react-leaflet";
+import { Circle, Marker, Popup, useMap, useMapEvent } from "react-leaflet";
 import { FaMugHot } from "react-icons/fa";
 import L from "leaflet";
 import { Icon } from "./Marker.jsx";
@@ -10,8 +10,8 @@ export function LocationMarker() {
   useMapEvent({
     click(e) {
       Icon();
-      console.log(e.latlng);
-      // setPosition(e.latlng);
+      // console.log(e.latlng);
+      setPosition(e.latlng);
     },
   });
 
@@ -66,7 +66,9 @@ export default function MapMarker({ position, handleClick, flag }) {
   const Render = () => {
     if (coordinates === null) return <></>;
     return (
-      <Marker position={coordinates} eventHandlers={{ click: handleClick }} />
+      <Marker position={coordinates} eventHandlers={{ click: handleClick }}>
+        <Popup>This is where we have found you.</Popup>
+      </Marker>
     );
   };
   return <Render />;
