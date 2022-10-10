@@ -2,7 +2,6 @@ import { BottomElement } from "../Footer/Footer.js";
 import { Content, HeaderElement } from "../shared/pageBody.jsx";
 import React, { useEffect, useMemo, useState } from "react";
 import { Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
-import { ReviewMap } from "./Review.jsx";
 import MapMarker, { LocationMarker } from "../Marker/Marker.js";
 import { Icon } from "../Marker/Marker.jsx";
 import { useLocation } from "react-router";
@@ -104,39 +103,9 @@ export default function Review() {
   // aprender useMemo para manter a renderização do mapa
   // estática enquanto ocorrem requisições para o backend
 
-  const RenderMapElement = () => {
-    return (
-      <ReviewMap
-        center={position}
-        zoom={zoom}
-        scrollWheelZoom={false}
-        doubleClickZoom={false}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {/* <LocationMarker /> */}
-        <RenderNearbyLocations
-          setPosition={setPosition}
-          setCenter={setCenter}
-          requestNewLocations={requestNewLocations}
-          memoPlaces={memoPlaces}
-          setZoom={setZoom}
-        />
-        <WhereIAmMarker
-          setPosition={setPosition}
-          setCenter={setCenter}
-          center={center}
-          setInitialized={setInitialized}
-          zoom={zoom}
-          setZoom={setZoom}
-        />
-      </ReviewMap>
-    );
-  };
-
   return (
     <Content>
       <HeaderElement />
-      <RenderMapElement />
       <BottomElement />
     </Content>
   );

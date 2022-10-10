@@ -6,49 +6,6 @@ import { BottomElement } from "../Footer/Footer.js";
 import DataContext from "../context/DataContext.js";
 import Post from "../Post/Post.js";
 
-function RenderPostData() {
-  const token = process.env.REACT_APP_TOKEN;
-  const header = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const { response } = useAxios({
-    method: "get",
-    path: "posts",
-    config: [header],
-  });
-  return response.map((data, index) => <Post key={index} {...data} />);
-}
-
-// export default function Timeline() {
-//   const [config, setConfig] = useState({});
-//   const { response, error, loading } = useAxios(config);
-//   const [timeline, setTimeline] = useState(null);
-//   const { locationData, setLocationData } = useContext(DataContext);
-
-//   useEffect(() => {
-//     if (!loading && timeline === null) {
-//       const token = process.env.REACT_APP_TOKEN;
-//       const header = {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       };
-//       const newConfig = {
-//         method: "get",
-//         path: "posts",
-//         config: [header],
-//       };
-//       setConfig(newConfig);
-//       if (response !== null) {
-//         setTimeline(response);
-//         setLocationData(response);
-//         setConfig({});
-//       }
-//     }
-//   }, [response]);
-
 //   function handleError() {
 //     if (!loading) {
 //       if (error?.response.status) {
@@ -71,23 +28,6 @@ function RenderPostData() {
 //     }
 //   }
 
-//   const Page = () => {
-//     if (timeline !== null)
-//       return timeline.map((data, index) => (
-//         <MapOverlay key={index} {...data} />
-//       ));
-//     return <></>;
-//   };
-
-//   return (
-//     <Content>
-//       <HeaderElement />
-//       <Page />
-//       <BottomElement />
-//     </Content>
-//   );
-// }
-
 export default function Timeline(props) {
   const [config, setConfig] = useState({});
   const { response, error, loading } = useAxios(config);
@@ -101,20 +41,26 @@ export default function Timeline(props) {
           Authorization: `Bearer ${token}`,
         },
       };
+
       const newConfig = {
         method: "get",
         path: "posts",
         config: [header],
       };
+
       setConfig(newConfig);
       if (response !== null) {
+        window.scrollTo(0, 0);
+        // NÃO É O IDEAL, MAS ACONTECE //
         setTimeline(response);
         setConfig({});
       }
     }
   }, [response]);
   const Page = () => {
-    if (timeline === null) return <></>;
+    if (timeline === null) {
+      return <></>;
+    }
     return timeline.map((data, index) => <Post key={index} {...data} />);
   };
 
