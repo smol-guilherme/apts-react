@@ -72,6 +72,7 @@ export default function Review() {
         key={id}
         position={[place.latitude, place.longitude]}
         handleClick={handleClick}
+        flag={true}
       />
     ));
   }
