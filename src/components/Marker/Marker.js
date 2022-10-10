@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import DataContext from "../context/DataContext.js";
-import { Circle, Marker, Popup, useMap, useMapEvent } from "react-leaflet";
+import { Marker, Popup, useMap, useMapEvent } from "react-leaflet";
 import { FaMugHot } from "react-icons/fa";
 import L from "leaflet";
 import { Icon } from "./Marker.jsx";
