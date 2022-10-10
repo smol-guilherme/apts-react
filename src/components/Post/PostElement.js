@@ -1,7 +1,7 @@
 import React from "react";
 import { FaPlusCircle, FaCheckCircle, FaStar, FaRegStar } from "react-icons/fa";
-import { formatDate } from "../utils/dataFormatUtils.js";
-import { Box, Header, Text, Footer } from "../components/shared/postBody.jsx";
+import { formatDate } from "../../utils/dataFormatUtils.js";
+import { Box, Header, Text, Footer } from "../shared/postBody.jsx";
 
 export class FooterElement extends React.Component {
   render() {

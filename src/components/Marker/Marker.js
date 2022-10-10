@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useContext, useEffect } from "react";
 import DataContext from "../context/DataContext.js";
 import { Marker, Popup, useMap, useMapEvent } from "react-leaflet";
 import { FaMugHot } from "react-icons/fa";
@@ -25,15 +25,17 @@ export function LocationMarker() {
 }
 
 export default function MapMarker({ position, handleClick, flag }) {
-  const [interactable, setInteractable] = useState(flag);
-  const memoFlag = useMemo(() => setInteractable(interactable), [interactable]);
   const mMap = useMap();
-  console.log(flag);
   const { overlay, setOverlay } = useContext(DataContext);
+  const [coordinates, setCoordinates] = useState(null);
   const newBounds = mMap.getBounds();
+
   useEffect(() => {
     Icon();
-  }, []);
+    if (coordinates === null) {
+      setCoordinates([...position]);
+    }
+  }, [coordinates]);
 
   const svgIcon = L.divIcon({
     html: `
@@ -62,22 +64,10 @@ export default function MapMarker({ position, handleClick, flag }) {
   }
 
   const Render = () => {
-    if (memoFlag)
-      return (
-        <Marker
-          position={[...position.map((val) => val / 10000)]}
-          // eventHandlers={{ click: handleClick }}
-        >
-          <Popup>Please say hi.</Popup>
-        </Marker>
-      );
+    if (coordinates === null) return <></>;
     return (
-      <Marker
-        position={[...position.map((val) => val / 10000)]}
-        eventHandlers={{ click: handleClick }}
-      />
+      <Marker position={coordinates} eventHandlers={{ click: handleClick }} />
     );
   };
-
   return <Render />;
 }

@@ -26,8 +26,7 @@ export const Content = styled.div`
   flex-grow: 1;
   align-items: center;
   margin: 0 auto;
-  /* color: white; */
-  color: black;
+  color: white;
   overflow-y: scroll;
   overflow-x: hidden;
 `

@@ -1,47 +1,4 @@
 import styled from "styled-components";
-import { FaPlusCircle, FaCheckCircle, FaStar, FaRegStar } from 'react-icons/fa';
-import { formatDate } from "../../utils/dataFormatUtils.js";
-
-export function FooterElement(props) {
-  const StarDisplay = () => {
-    if(props.liked) return <FaStar onClick={(e) => props.handleClickStar(e, props.id) } />
-    return <FaRegStar onClick={(e) => props.handleClickStar(e, props.id) } />
-  }
-
-  return(
-    <Footer >
-      <span>
-        <StarDisplay handleClickStar={props.handleClickStar} />
-        {props.starsCount} 
-      </span>
-      <p>
-        {props.location.locationName}
-      </p>
-    </Footer>
-  )
-}
-
-export function PostElement(props) {
-  const IconDisplay = () => { 
-    if(props.follows) return <FaPlusCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
-  return <FaCheckCircle onClick={(e) => { e.stopPropagation(); console.log('bzz') }} />
-}
-  const date = formatDate(props.date);
-  return(
-  <Box onClick={props.handleClick}>
-    <Header>
-      <div>
-        {props.author.username} 
-        <IconDisplay />
-      </div>
-      <p>
-        {date}
-      </p>
-    </Header>
-    <Text >{props.description}</Text>
-    <FooterElement {...props} starsCount={props.starsCount} handleClickStar={props.handleClickStar}  />
-  </Box>);
-}
 
 export const Box = styled.div`
   display: flex;
@@ -95,7 +52,7 @@ export const Header = styled.div`
   }
 `
 
-const Footer = styled(Header)`
+export const Footer = styled(Header)`
   bottom: 0;
   border-radius: 0 0 8px 8px;
   background-color: #a9ceee;
@@ -107,7 +64,7 @@ const Footer = styled(Header)`
   }
 `
 
-const Text = styled.p`
+export const Text = styled.p`
   display: flex;
   word-spacing: 2px;
   flex-grow: 1;

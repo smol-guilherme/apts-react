@@ -1,40 +1,6 @@
-import { TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import MapMarker, { LocationMarker } from "../Marker/Marker.js";
-import { MapContent } from "./Map.jsx";
 import { useEffect, useState } from "react";
-import { Box, PostElement } from "../shared/postBody.jsx";
-import { MapHeader } from "./Map.jsx";
 import { useAxios } from "../../hooks/useAxios.js";
-
-function MapElement(props) {
-  const latitude = props.location.latitude / 10000;
-  const longitude = props.location.longitude / 10000;
-  // console.log(props);
-  return (
-    <Box>
-      <MapHeader>
-        <div>{props.title}</div>
-        <p>{props.author.username}</p>
-      </MapHeader>
-      <MapContent
-        zoomControl={false}
-        center={[latitude, longitude]}
-        zoom={17}
-        dragging={false}
-        scrollWheelZoom={false}
-        doubleClickZoom={false}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MapMarker
-          handleClick={props.handleClick}
-          position={[latitude, longitude]}
-        />
-        {/* <LocationMarker /> */}
-      </MapContent>
-    </Box>
-  );
-}
 
 export function MapOverlay(props) {
   const [overlay, setOverlay] = useState(false);
@@ -53,10 +19,6 @@ export function MapOverlay(props) {
     }
   }, [response]);
 
-  function handleClick() {
-    setOverlay((previous) => !previous);
-  }
-
   function handleClickStar(e, params = "") {
     e.stopPropagation();
     const token = process.env.REACT_APP_TOKEN;
@@ -73,26 +35,5 @@ export function MapOverlay(props) {
     setConfig(newConfig);
   }
 
-  const Render = () => {
-    if (!overlay)
-      return (
-        <MapElement
-          starsCount={stars}
-          liked={liked}
-          handleClick={handleClick}
-          {...props}
-        />
-      );
-    return (
-      <PostElement
-        starsCount={stars}
-        liked={liked}
-        handleClickStar={handleClickStar}
-        handleClick={handleClick}
-        {...props}
-      />
-    );
-  };
-
-  return <Render />;
+  return <></>;
 }
